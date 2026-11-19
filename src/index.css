@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", "Droid Sans Fallback", sans-serif;
+  --font-serif: "Noto Serif SC", "Songti SC", "STSong", "Noto Sans SC", serif;
+  --color-paper: #f3eee6;
+  --color-ink: #1c1915;
+  --color-card: #fffcf8;
+  --color-line: #e4d9c8;
+  --color-muted: #6d645b;
+  --color-cinnabar: #c4452d;
+  --color-seal: #8d2c1a;
+  --color-moss: #1d6b45;
+  --color-amber: #8a5a12;
+  --color-amberbg: #f8efd8;
+}
+
+html {
+  font-family: var(--font-sans);
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: #f3eee6;
+  color: #1c1915;
+}
+
+button,
+input,
+textarea {
+  font-family: inherit;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
