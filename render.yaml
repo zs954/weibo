@@ -1,0 +1,20 @@
+# Free Node web service for 微博内容工坊.
+# Serves the Vite build and the /api routes in server/plugin.ts.
+# DNS for gmailchao.xyz is configured separately; this only attaches the domain.
+services:
+  - type: web
+    name: weibo-content-studio
+    runtime: node
+    plan: free
+    healthCheckPath: /
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm start
+    domains:
+      - gmailchao.xyz
+    # Optional provider keys stay out of git. Add any of these in the Dashboard
+    # if you want server-side defaults; blank is fine. See .env.example.
+    # DEEPSEEK_API_KEY, DEEPSEEK_MODEL, DEEPSEEK_BASE_URL
+    # OPENAI_COMPAT_TEXT_API_KEY, OPENAI_COMPAT_TEXT_MODEL, OPENAI_COMPAT_TEXT_BASE_URL
+    # ARK_API_KEY, ARK_MODEL, ARK_BASE_URL
+    # OPENAI_COMPAT_IMAGE_API_KEY, OPENAI_COMPAT_IMAGE_MODEL, OPENAI_COMPAT_IMAGE_BASE_URL
+    # HOT_SEARCH_URL, HOT_SEARCH_API_KEY

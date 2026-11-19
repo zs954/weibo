@@ -16,11 +16,24 @@ npm run dev
 生产构建：
 
 ```bash
+npm ci
 npm run build
-npm run preview
+npm start
 ```
 
-`npm run preview` 同样带本地代理，远程模型和在线热榜可以继续用。只把 `dist/` 丢到静态空间时，本地模板、本地海报和离线热榜样本仍然可用；在线接口需要这个开发服务器。
+`npm start`（和 `npm run preview` 相同）用 Vite preview 提供构建后的页面，并挂上和开发时一样的 `/api` 路由：`/api/hot`、`/api/providers/text`、`/api/providers/image`、`/api/provider-status`。进程监听 `0.0.0.0`，端口读取环境变量 `PORT`；没有 `PORT` 时用 `4317`。`npm run dev` 仍然固定在 `4317`。
+
+可以接受的 Host 包括本机、`*.onrender.com` 和 `gmailchao.xyz`（含其子域名）。只把 `dist/` 丢到静态空间时，本地模板、本地海报和离线热榜样本仍然可用；在线热榜和远程模型需要这个 Node 服务。
+
+## 部署到 Render
+
+仓库根目录的 `render.yaml` 定义一个免费 Node Web Service（`plan: free`）。构建命令是 `npm ci --include=dev && npm run build`，启动命令是 `npm start`。`--include=dev` 是因为 Render 会把 `NODE_ENV` 设为 `production`，这时普通的 `npm ci` 会跳过开发依赖，而构建和启动都需要 TypeScript 和 Vite。
+
+在 [Blueprint 页面](https://dashboard.render.com/blueprint/new?repo=https://github.com/zs954/weibo) 选择本仓库并应用。合并到 `main` 之后再用这个链接，或者在创建时改选包含 `render.yaml` 的分支。
+
+密钥不要写进仓库，也不要写进 `render.yaml`。需要服务端默认密钥时，在 Render Dashboard 里按 `.env.example` 添加环境变量即可；留空也行，页面「模型设置」里填写的密钥优先，并且只存在浏览器本地。不填密钥时，本地模板和本地海报仍然可用。
+
+`gmailchao.xyz` 写在 Blueprint 的 `domains` 里。DNS 需要另外把域名指到这个服务（Render 会签发证书）。免费实例大约空闲 15 分钟后会休眠，下次打开要多等几秒。
 
 ## 演示边界
 
